@@ -1,0 +1,159 @@
+﻿@page "/"
+
+@*<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />*@
+
+
+
+<PageTitle>Tic Tac Toe</PageTitle>
+
+<center><h3>left-click for "O", right-click for "X"</h3></center>
+
+<div oncontextmenu="return false">
+    <div class="row">
+        <div class="col col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 align-content-center bg-light border-1 border-bottom">
+            <button class="btn btn-lg form-control pt-5 pb-5" @onclick="Clicked" @onmouseup="() => MouseUp(1)" @oncontextmenu="ContextMenu" disabled="@(oWins || xWins)">
+                @cell1
+            </button>
+        </div>
+        <div class="col col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 align-content-center border-1 border-bottom" style="border-left: 1px solid lightgray; border-right: 1px solid lightgray;">
+            <button class="btn btn-lg form-control pt-5 pb-5" @onclick="Clicked" @onmouseup="() => MouseUp(2)" @oncontextmenu="ContextMenu" disabled="@(oWins || xWins)">
+                @cell2
+            </button>
+        </div>
+        <div class="col col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 align-content-center bg-light border-1 border-bottom">
+            <button class="btn btn-lg form-control pt-5 pb-5" @onclick="Clicked" @onmouseup="() => MouseUp(3)" @oncontextmenu="ContextMenu" disabled="@(oWins || xWins)">
+                @cell3
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 align-content-center">
+            <button class="btn btn-lg form-control pt-5 pb-5 border-1" @onclick="Clicked" @onmouseup="() => MouseUp(4)" @oncontextmenu="ContextMenu" disabled="@(oWins || xWins)">
+                @cell4
+            </button>
+        </div>
+        <div class="col col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 align-content-center bg-light" style="border-left: 1px solid lightgray; border-right: 1px solid lightgray;">
+            <button class="btn btn-lg form-control pt-5 pb-5 border-1" @onclick="Clicked" @onmouseup="() => MouseUp(5)" @oncontextmenu="ContextMenu" disabled="@(oWins || xWins)">
+                @cell5
+            </button>
+        </div>
+        <div class="col col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 align-content-center">
+            <button class="btn btn-lg form-control pt-5 pb-5 border-1" @onclick="Clicked" @onmouseup="() => MouseUp(6)" @oncontextmenu="ContextMenu" disabled="@(oWins || xWins)">
+                @cell6
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 align-content-center bg-light border-1 border-top">
+            <button class="btn btn-lg form-control pt-5 pb-5" @onclick="Clicked" @onmouseup="() => MouseUp(7)" @oncontextmenu="ContextMenu" disabled="@(oWins || xWins)">
+                @cell7
+            </button>
+        </div>
+        <div class="col col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 align-content-center border-1 border-top" style="border-left: 1px solid lightgray; border-right: 1px solid lightgray;">
+            <button class="btn btn-lg form-control pt-5 pb-5" @onclick="Clicked" @onmouseup="() => MouseUp(8)" @oncontextmenu="ContextMenu" disabled="@(oWins || xWins)">
+                @cell8
+            </button>
+        </div>
+        <div class="col col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 align-content-center bg-light border-1 border-top">
+            <button class="btn btn-lg form-control pt-5 pb-5" @onclick="Clicked" @onmouseup="() => MouseUp(9)" @oncontextmenu="ContextMenu" disabled="@(oWins || xWins)">
+                @cell9
+            </button>
+        </div>
+    </div>
+</div>
+
+<center>
+    @if (oWins && !xWins)
+    {
+        <p>O has won this round</p>
+    }
+    @if (!oWins && xWins)
+    {
+        <p>X has won this round</p>
+    }
+
+    @if (oWins || xWins || (!string.IsNullOrEmpty(cell1) && !string.IsNullOrEmpty(cell2) && !string.IsNullOrEmpty(cell3) && !string.IsNullOrEmpty(cell4) && !string.IsNullOrEmpty(cell5) && !string.IsNullOrEmpty(cell6) && !string.IsNullOrEmpty(cell7) && !string.IsNullOrEmpty(cell8) && !string.IsNullOrEmpty(cell9)))
+    {
+        <button class="btn btn-lg btn-primary" @onclick="TryAgain">Try Again</button>
+    }
+</center>
+
+@code {
+    string cell1 = string.Empty;
+    string cell2 = string.Empty;
+    string cell3 = string.Empty;
+    string cell4 = string.Empty;
+    string cell5 = string.Empty;
+    string cell6 = string.Empty;
+    string cell7 = string.Empty;
+    string cell8 = string.Empty;
+    string cell9 = string.Empty;
+
+    string lastTurn = string.Empty;
+
+    int clicked { get; set; } = 0;
+
+    bool oWins = false;
+    bool xWins = false;
+
+    void Clicked(MouseEventArgs e)
+    {
+        var isLeftClick = e.Button == 0;
+        var z = isLeftClick ? "O" : "X";
+
+        if (lastTurn.Equals(z)) return;
+
+        if (clicked == 1 && string.IsNullOrEmpty(cell1)) cell1 = z;
+        if (clicked == 2 && string.IsNullOrEmpty(cell2)) cell2 = z;
+        if (clicked == 3 && string.IsNullOrEmpty(cell3)) cell3 = z;
+        if (clicked == 4 && string.IsNullOrEmpty(cell4)) cell4 = z;
+        if (clicked == 5 && string.IsNullOrEmpty(cell5)) cell5 = z;
+        if (clicked == 6 && string.IsNullOrEmpty(cell6)) cell6 = z;
+        if (clicked == 7 && string.IsNullOrEmpty(cell7)) cell7 = z;
+        if (clicked == 8 && string.IsNullOrEmpty(cell8)) cell8 = z;
+        if (clicked == 9 && string.IsNullOrEmpty(cell9)) cell9 = z;
+
+        if ((cell1.Equals(cell2) && cell2.Equals(cell3) && !string.IsNullOrEmpty(cell3)) || (cell1.Equals(cell4) && cell4.Equals(cell7) && !string.IsNullOrEmpty(cell7)) || (cell1.Equals(cell5) && cell5.Equals(cell9) && !string.IsNullOrEmpty(cell9)) || (cell2.Equals(cell5) && cell5.Equals(cell8) && !string.IsNullOrEmpty(cell8)) || (cell3.Equals(cell6) && cell5.Equals(cell9) && !string.IsNullOrEmpty(cell9)) || (cell4.Equals(cell5) && cell5.Equals(cell6) && !string.IsNullOrEmpty(cell6)) || (cell7.Equals(cell5) && cell5.Equals(cell3) && !string.IsNullOrEmpty(cell3)) || (cell7.Equals(cell8) && cell8.Equals(cell9) && !string.IsNullOrEmpty(cell9)))
+        {
+            oWins = z.Equals("O");
+            xWins = z.Equals("X");
+        }
+
+        lastTurn = z;
+    }
+
+    void ContextMenu(MouseEventArgs e)
+    {
+        Clicked(e);
+    }
+
+    void MouseUp(int cell)
+    {
+        clicked = cell;
+    }
+
+    void TryAgain()
+    {
+        oWins = false;
+        xWins = false;
+
+        cell1 = string.Empty;
+        cell2 = string.Empty;
+        cell3 = string.Empty;
+        cell4 = string.Empty;
+        cell5 = string.Empty;
+        cell6 = string.Empty;
+        cell7 = string.Empty;
+        cell8 = string.Empty;
+        cell9 = string.Empty;
+
+        lastTurn = string.Empty;
+    }
+}
+
