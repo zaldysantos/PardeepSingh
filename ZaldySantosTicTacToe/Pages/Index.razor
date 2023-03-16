@@ -119,7 +119,15 @@ Welcome to your new app.
         if (clicked == 8 && string.IsNullOrEmpty(cell8)) cell8 = z;
         if (clicked == 9 && string.IsNullOrEmpty(cell9)) cell9 = z;
 
-        if ((cell1.Equals(cell2) && cell2.Equals(cell3) && !string.IsNullOrEmpty(cell3)) || (cell1.Equals(cell4) && cell4.Equals(cell7) && !string.IsNullOrEmpty(cell7)) || (cell1.Equals(cell5) && cell5.Equals(cell9) && !string.IsNullOrEmpty(cell9)) || (cell2.Equals(cell5) && cell5.Equals(cell8) && !string.IsNullOrEmpty(cell8)) || (cell3.Equals(cell6) && cell5.Equals(cell9) && !string.IsNullOrEmpty(cell9)) || (cell4.Equals(cell5) && cell5.Equals(cell6) && !string.IsNullOrEmpty(cell6)) || (cell7.Equals(cell5) && cell5.Equals(cell3) && !string.IsNullOrEmpty(cell3)) || (cell7.Equals(cell8) && cell8.Equals(cell9) && !string.IsNullOrEmpty(cell9)))
+        
+        if ((cell1.Equals(cell2) && cell2.Equals(cell3) && !string.IsNullOrEmpty(cell3)) 
+         || (cell1.Equals(cell4) && cell4.Equals(cell7) && !string.IsNullOrEmpty(cell7)) 
+         || (cell1.Equals(cell5) && cell5.Equals(cell9) && !string.IsNullOrEmpty(cell9)) 
+         || (cell2.Equals(cell5) && cell5.Equals(cell8) && !string.IsNullOrEmpty(cell8)) 
+         || (cell3.Equals(cell6) && cell6.Equals(cell9) && !string.IsNullOrEmpty(cell9)) // corrected
+         || (cell4.Equals(cell5) && cell5.Equals(cell6) && !string.IsNullOrEmpty(cell6)) 
+         || (cell7.Equals(cell5) && cell5.Equals(cell3) && !string.IsNullOrEmpty(cell3)) 
+         || (cell7.Equals(cell8) && cell8.Equals(cell9) && !string.IsNullOrEmpty(cell9)))
         {
             oWins = z.Equals("O");
             xWins = z.Equals("X");
